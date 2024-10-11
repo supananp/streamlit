@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # อ่านไฟล์ Excel
-df = pd.read_excel(r'C:\streamlit\ยอดจดทะเบียนรถรวม.xlsx')
+df = pd.read_excel(r'https://github.com/supananp/streamlit/blob/main/%E0%B8%A2%E0%B8%AD%E0%B8%94%E0%B8%88%E0%B8%94%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%9A%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A3%E0%B8%A7%E0%B8%A1.xlsx')
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
