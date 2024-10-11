@@ -1,8 +1,4 @@
-import streamlit as st
 import pandas as pd
 
-# อ่านไฟล์ Excel ที่อยู่ในโฟลเดอร์เดียวกัน
-df = pd.read_excel('C:\streamlit\ยอดจดทะเบียนรถรวม.xlsx')
-
-# แสดงข้อมูล
-st.write(df)
+# ใช้เส้นทางสัมพัทธ์ที่เหมาะสมกับโครงสร้างของโฟลเดอร์ใน repository
+df = pd.read_excel('C:\streamlit\ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
