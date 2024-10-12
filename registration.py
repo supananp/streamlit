@@ -1,14 +1,13 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import streamlit as st
+import matplotlib.pyplot as plt
+import numpy as np
 
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
-    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     counts = data_filtered.groupby('Year')[engine_type].sum()
 
@@ -25,7 +24,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
+    plt.rcParams['font.family'] = 'Tahoma'
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
@@ -57,7 +56,7 @@ def plot_bar_chart():
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
+    plt.rcParams['font.family'] = 'Tahoma'
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -93,7 +92,6 @@ def format_number(value):
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
 def plot_gauge_chart(value, total_sum, label, color):
-    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
     fig, ax = plt.subplots(figsize=(3, 2), subplot_kw={'projection': 'polar'})  # ปรับขนาดให้เล็กลง
 
     # คำนวณมุมสำหรับกราฟ (0 ถึง 360 องศา)
@@ -119,7 +117,6 @@ def plot_gauge_chart(value, total_sum, label, color):
     st.pyplot(fig)
 
 def plot_all_gauge_charts():
-    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     total_registrations = {
         'ICEV': data_years['ICEV'].sum(),
@@ -151,7 +148,7 @@ with col2:
 with col3:
     plot_trend_chart()  # กราฟที่ 2
 
-# แถว 2
+# แถวที่ 2
 col4, col5, col6, col7 = st.columns(4)
 
 with col4:
@@ -166,10 +163,13 @@ with col6:
 with col7:
     plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
 
+
+
+
 st.markdown(
     """
     <div style="background-color:#ffa600;padding:5px;">
-        <h1 style="color:#58508d;text-align:center;font-family:'Angsana New';">จำนวนการจดทะเบียนรถแยกตามประเภทของพลังงาน</h1>
+        <h1 style="color:#58508d;text-align:center;">จำนวนการจดทะเบียนรถแยกตามประเภทของพลังงาน</h1>
     </div>
     """,
     unsafe_allow_html=True
