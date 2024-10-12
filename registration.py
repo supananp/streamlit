@@ -66,7 +66,7 @@ def plot_bar_chart():
     plt.tight_layout()
     st.pyplot(fig)
 
-# กราฟที่ 2 (Trend Chart)
+# กราฟที่ 3 (Trend Chart)
 def plot_trend_chart():
     plt.rcParams['font.family'] = font_prop.get_name()  # ใช้ฟอนต์ Angsana New
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
@@ -88,12 +88,12 @@ def plot_trend_chart():
 
     ax.set_xlabel('ปี', fontsize=14, labelpad=15, fontproperties=font_prop)
     ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15, fontproperties=font_prop)
-    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=20, pad=20, fontproperties=font_prop)
+    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=25, pad=25, fontproperties=font_prop)
     ax.legend(prop=font_prop)  # ใช้ฟอนต์ Angsana New ใน legend
     plt.tight_layout()
     st.pyplot(fig)
 
-# ฟังก์ชันสำหรับย่อขนาดตัวเลข
+# ฟังก์ชันสำหรับย่อขนาดตัวเลข กราฟ2
 def format_number(value):
     if value >= 1_000_000:
         formatted_value = f'{value / 1_000_000:.1f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยใช้ทศนิยม 1 ตำแหน่ง
