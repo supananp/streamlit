@@ -9,6 +9,7 @@ df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', e
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
+    plt.rcParams['font.family'] = 'DejaVu Sans'  # เปลี่ยนฟ้อนต์เป็น DejaVu Sans
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     counts = data_filtered.groupby('Year')[engine_type].sum()
 
@@ -25,7 +26,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = 'Tahoma'
+    plt.rcParams['font.family'] = 'DejaVu Sans'  # เปลี่ยนฟ้อนต์เป็น DejaVu Sans
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
@@ -57,7 +58,7 @@ def plot_bar_chart():
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = 'Tahoma'
+    plt.rcParams['font.family'] = 'DejaVu Sans'  # เปลี่ยนฟ้อนต์เป็น DejaVu Sans
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -93,6 +94,7 @@ def format_number(value):
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
 def plot_gauge_chart(value, total_sum, label, color):
+    plt.rcParams['font.family'] = 'DejaVu Sans'  # เปลี่ยนฟ้อนต์เป็น DejaVu Sans
     fig, ax = plt.subplots(figsize=(3, 2), subplot_kw={'projection': 'polar'})  # ปรับขนาดให้เล็กลง
 
     # คำนวณมุมสำหรับกราฟ (0 ถึง 360 องศา)
@@ -153,16 +155,17 @@ with col3:
 col4, col5, col6, col7 = st.columns(4)
 
 with col4:
-    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
+    plot_engine_registration('ICEV', '#ff6361', 'ยอดจดทะเบียนรถ ICEV')
 
 with col5:
-    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 4
+    plot_engine_registration('HEV', '#ffa600', 'ยอดจดทะเบียนรถ HEV')
 
 with col6:
-    plot_engine_registration('PHEV', '#58508d', 'ยอดการจดทะเบียนรถประเภท PHEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 5
+    plot_engine_registration('PHEV', '#58508d', 'ยอดจดทะเบียนรถ PHEV')
 
 with col7:
-    plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
+    plot_engine_registration('BEV', '#003f5c', 'ยอดจดทะเบียนรถ BEV')
+
 
 
 
