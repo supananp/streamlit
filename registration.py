@@ -19,9 +19,9 @@ def plot_engine_registration(engine_type, color, title):
     fig, ax = plt.subplots(figsize=(4, 3))  # ปรับขนาดให้เล็กลง
     counts.plot(kind='bar', color=color, edgecolor='black', ax=ax)
 
-    ax.set_title(title)
-    ax.set_xlabel('ปี')
-    ax.set_ylabel('จำนวนการจดทะเบียน')
+    ax.set_title(title, fontproperties=font_prop)
+    ax.set_xlabel('ปี', fontproperties=font_prop)
+    ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
     ax.tick_params(axis='x', rotation=0)  # หมุน labels บนแกน X
     ax.grid(False)  # ปิดการแสดงเส้นกริด
     plt.tight_layout()
@@ -29,7 +29,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = 'Tahoma'
+    plt.rcParams['font.family'] = font_prop.get_name()  # ใช้ฟอนต์ Angsana New
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
@@ -49,19 +49,19 @@ def plot_bar_chart():
         ax.bar(r1 + 3 * bar_width, df_year['BEV'], color='#003f5c', width=bar_width, label='BEV', alpha=0.8)
 
         ax.set_xticks([r + bar_width * 1.5 for r in range(n_car_types)])
-        ax.set_xticklabels(car_types, rotation=45, ha='right')
-        ax.set_title(f'Year {year}')
+        ax.set_xticklabels(car_types, rotation=45, ha='right', fontproperties=font_prop)
+        ax.set_title(f'Year {year}', fontproperties=font_prop)
 
         if i == 0:
-            ax.set_ylabel('จำนวนการจดทะเบียน')
+            ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
 
-    axes[0].legend()
+    axes[0].legend(prop=font_prop)  # ใช้ฟอนต์ Angsana New ใน legend
     plt.tight_layout()
     st.pyplot(fig)
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = 'Tahoma'
+    plt.rcParams['font.family'] = font_prop.get_name()  # ใช้ฟอนต์ Angsana New
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -79,10 +79,10 @@ def plot_trend_chart():
     for engine_type in engine_types:
         ax.plot(years, plot_data[engine_type], marker='o', label=engine_type, color=colors[engine_type])
 
-    ax.set_xlabel('ปี', fontsize=14, labelpad=15)
-    ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15)
-    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=16, pad=20)
-    ax.legend(fontsize=12)
+    ax.set_xlabel('ปี', fontsize=14, labelpad=15, fontproperties=font_prop)
+    ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15, fontproperties=font_prop)
+    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=16, pad=20, fontproperties=font_prop)
+    ax.legend(prop=font_prop)  # ใช้ฟอนต์ Angsana New ใน legend
     plt.tight_layout()
     st.pyplot(fig)
 
@@ -114,11 +114,11 @@ def plot_gauge_chart(value, total_sum, label, color):
     ax.set_axis_off()
 
     # แสดงค่าเปอร์เซ็นต์และปริมาณ
-    ax.text(0, -0.5, f'{percentage:.1f}%', fontsize=12, ha='center', va='center')  # แสดงเปอร์เซ็นต์
-    ax.text(0, -1, f'{value:,}', fontsize=10, ha='center', va='center')  # แสดงจำนวนรถ
+    ax.text(0, -0.5, f'{percentage:.1f}%', fontsize=12, ha='center', va='center', fontproperties=font_prop)  # แสดงเปอร์เซ็นต์
+    ax.text(0, -1, f'{value:,}', fontsize=10, ha='center', va='center', fontproperties=font_prop)  # แสดงจำนวนรถ
 
     # ชื่อกราฟ
-    plt.title(label, fontsize=14)
+    plt.title(label, fontsize=14, fontproperties=font_prop)
     st.pyplot(fig)
 
 def plot_all_gauge_charts():
@@ -168,12 +168,10 @@ with col6:
 with col7:
     plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
 
-
-
 st.markdown(
     """
     <div style="background-color:#ffa600;padding:5px;">
-        <h1 style="color:#58508d;text-align:center;">จำนวนการจดทะเบียนรถแยกตามประเภทของพลังงาน</h1>
+        <h1 style="color:#58508d;text-align:center;font-family:'Angsana New';">จำนวนการจดทะเบียนรถแยกตามประเภทของพลังงาน</h1>
     </div>
     """,
     unsafe_allow_html=True
