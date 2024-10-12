@@ -11,6 +11,13 @@ font_prop = font_manager.FontProperties(fname=font_path)
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
+# กำหนดขนาดฟอนต์
+font_size_title = 16
+font_size_label = 14
+font_size_legend = 12
+font_size_metric = 14
+font_size_gauge = 12
+
 # ฟังก์ชันสำหรับกราฟประเภทที่ 4 ถึง 7
 def plot_engine_registration(engine_type, color, title):
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
