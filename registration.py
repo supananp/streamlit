@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
-import matplotlib.font_manager as fm
+from matplotlib import font_manager
 
 # โหลดฟอนต์ภาษาไทย เช่น TH Sarabun New
-font_path = '/usr/share/fonts/truetype/thai/THSarabunNew.ttf'
+font_path = '/usr/share/fonts/truetype/thai/Angsana New.ttf'
 fontprop = fm.FontProperties(fname=font_path)
 
 # อ่านไฟล์ Excel
@@ -29,7 +29,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = fontprop.get_name()  # ใช้ฟอนต์ TH Sarabun New
+    plt.rcParams['font.family'] = 'Angsana New'
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
