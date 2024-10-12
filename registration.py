@@ -13,10 +13,10 @@ df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', e
 
 # กำหนดขนาดฟอนต์
 font_size_title = 25
-font_size_label = 14
-font_size_legend = 12
-font_size_metric = 14
-font_size_gauge = 12
+font_size_label = 25
+font_size_legend = 25
+font_size_metric = 25
+font_size_gauge = 25
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 4 ถึง 7
 def plot_engine_registration(engine_type, color, title):
