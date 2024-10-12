@@ -102,9 +102,7 @@ def format_number(value):
     else:
         formatted_value = str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
 
-    # สร้างข้อความ HTML เพื่อปรับขนาดตัวอักษร
-    return f'<span style="font-size: 12px;">{formatted_value}</span>'  # ปรับขนาดตามต้องการ
-
+    
 
 
 
