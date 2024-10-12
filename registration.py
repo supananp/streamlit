@@ -88,7 +88,7 @@ def plot_trend_chart():
 
     ax.set_xlabel('ปี', fontsize=14, labelpad=15, fontproperties=font_prop)
     ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15, fontproperties=font_prop)
-    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=30 pad=25, fontproperties=font_prop)
+    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=30, pad=25, fontproperties=font_prop)
     ax.legend(prop=font_prop)  # ใช้ฟอนต์ Angsana New ใน legend
     plt.tight_layout()
     st.pyplot(fig)
