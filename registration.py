@@ -103,10 +103,7 @@ def format_number(value):
         formatted_value = str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
     return formatted_value
 
-# ตัวอย่างการใช้งาน
-print(format_number(5_609_084))  # จะได้ผลลัพธ์เป็น 5.6M
-print(format_number(340_496))     # จะได้ผลลัพธ์เป็น 340K
-print(format_number(37_139))      # จะได้ผลลัพธ์เป็น 37K
+
     
 
 
