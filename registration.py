@@ -1,14 +1,22 @@
 import pandas as pd
-import streamlit as st
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import streamlit as st
 
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
+# ฟอนต์ที่ใช้ใน Streamlit
+st.markdown("""
+<style>
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # เปลี่ยนฟ้อนต์เป็น Noto Sans Thai
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     counts = data_filtered.groupby('Year')[engine_type].sum()
 
@@ -25,7 +33,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # เปลี่ยนฟ้อนต์เป็น Noto Sans Thai
+    plt.rcParams['font.family'] = 'Noto Sans Thai'
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
@@ -57,7 +65,7 @@ def plot_bar_chart():
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # เปลี่ยนฟ้อนต์เป็น Noto Sans Thai
+    plt.rcParams['font.family'] = 'Noto Sans Thai'
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -93,7 +101,6 @@ def format_number(value):
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
 def plot_gauge_chart(value, total_sum, label, color):
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # เปลี่ยนฟ้อนต์เป็น Noto Sans Thai
     fig, ax = plt.subplots(figsize=(3, 2), subplot_kw={'projection': 'polar'})  # ปรับขนาดให้เล็กลง
 
     # คำนวณมุมสำหรับกราฟ (0 ถึง 360 องศา)
@@ -140,35 +147,31 @@ def plot_all_gauge_charts():
 
 # แถว 1
 col1, col2, col3 = st.columns(3)
+
 with col1:
-    st.header("ยอดจดทะเบียนรถรวม")
-    plot_bar_chart()
+    plot_bar_chart()  # กราฟที่ 1
 
 with col2:
-    st.header("แนวโน้มยอดจดทะเบียน")
-    plot_trend_chart()
+    plot_all_gauge_charts()  # กราฟที่ 7
 
 with col3:
-    st.header("ยอดรวมการจดทะเบียนรถ")
-    plot_all_gauge_charts()
+    plot_trend_chart()  # กราฟที่ 2
 
 # แถว 2
 col4, col5, col6, col7 = st.columns(4)
+
 with col4:
-    st.header("ยอดจดทะเบียนรถ ICEV")
-    plot_engine_registration('ICEV', '#ff6361', 'ยอดจดทะเบียนรถ ICEV')
+    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
 
 with col5:
-    st.header("ยอดจดทะเบียนรถ HEV")
-    plot_engine_registration('HEV', '#ffa600', 'ยอดจดทะเบียนรถ HEV')
+    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 4
 
 with col6:
-    st.header("ยอดจดทะเบียนรถ PHEV")
-    plot_engine_registration('PHEV', '#58508d', 'ยอดจดทะเบียนรถ PHEV')
+    plot_engine_registration('PHEV', '#58508d', 'ยอดการจดทะเบียนรถประเภท PHEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 5
 
 with col7:
-    st.header("ยอดจดทะเบียนรถ BEV")
-    plot_engine_registration('BEV', '#003f5c', 'ยอดจดทะเบียนรถ BEV')
+    plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
+
 
 st.markdown(
     """
