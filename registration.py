@@ -12,7 +12,7 @@ font_prop = font_manager.FontProperties(fname=font_path)
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
 # กำหนดขนาดฟอนต์
-font_size_title = 16
+font_size_title = 25
 font_size_label = 14
 font_size_legend = 12
 font_size_metric = 14
