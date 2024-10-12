@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import font_manager
 
 # กำหนดเส้นทางฟอนต์ Angsana New
-font_path = 'C:/streamlit/streamlit/angsana.ttc'  # เปลี่ยนเส้นทางให้ถูกต้อง
+font_path = 'angsana.ttc'  # เปลี่ยนเส้นทางให้ถูกต้อง
 font_prop = font_manager.FontProperties(fname=font_path)
 
 # อ่านไฟล์ Excel
