@@ -96,11 +96,12 @@ def plot_trend_chart():
 # ฟังก์ชันสำหรับย่อขนาดตัวเลข
 def format_number(value):
     if value >= 1_000_000:
-        return f'{value / 1_000_000:.1f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน
+        return f'{value / 1_000_000:.0f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยไม่ใช้ทศนิยม
     elif value >= 1_000:
-        return f'{value / 1_000:.1f}K'  # เปลี่ยนเป็น "K" สำหรับพัน
+        return f'{value / 1_000:.0f}K'  # เปลี่ยนเป็น "K" สำหรับพัน โดยไม่ใช้ทศนิยม
     else:
         return str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
+
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
 def plot_gauge_chart(value, total_sum, label, color):
