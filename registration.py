@@ -2,22 +2,14 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import font_manager
+
+# กำหนดเส้นทางฟอนต์ Angsana New
+font_path = 'C:/streamlit/streamlit/angsana.ttc'  # เปลี่ยนเส้นทางให้ถูกต้อง
+font_prop = font_manager.FontProperties(fname=font_path)
 
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
-
-# กำหนด CSS สำหรับฟอนต์ที่ต้องการ
-st.markdown(
-    """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=TH+Sarabun+New&display=swap');
-    body {
-        font-family: 'TH Sarabun New', sans-serif;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
@@ -27,9 +19,9 @@ def plot_engine_registration(engine_type, color, title):
     fig, ax = plt.subplots(figsize=(4, 3))  # ปรับขนาดให้เล็กลง
     counts.plot(kind='bar', color=color, edgecolor='black', ax=ax)
 
-    ax.set_title(title)
-    ax.set_xlabel('ปี')
-    ax.set_ylabel('จำนวนการจดทะเบียน')
+    ax.set_title(title, fontproperties=font_prop)
+    ax.set_xlabel('ปี', fontproperties=font_prop)
+    ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
     ax.tick_params(axis='x', rotation=0)  # หมุน labels บนแกน X
     ax.grid(False)  # ปิดการแสดงเส้นกริด
     plt.tight_layout()
@@ -56,28 +48,13 @@ def plot_bar_chart():
         ax.bar(r1 + 3 * bar_width, df_year['BEV'], color='#003f5c', width=bar_width, label='BEV', alpha=0.8)
 
         ax.set_xticks([r + bar_width * 1.5 for r in range(n_car_types)])
-        ax.set_xticklabels(car_types, rotation=45, ha='right')
-        ax.set_title(f'ปี {year}')
+        ax.set_xticklabels(car_types, rotation=45, ha='right', fontproperties=font_prop)
+        ax.set_title(f'Year {year}', fontproperties=font_prop)
 
         if i == 0:
-            ax.set_ylabel('จำนวนการจดทะเบียน')
+            ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
 
     axes[0].legend()
-    plt.tight_layout()
-    st.pyplot(fig)
-
-# ฟังก์ชันสำหรับกราฟแนวโน้ม
-def plot_trend_chart():
-    data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
-    trend_data = data_filtered.groupby('Year')[['ICEV', 'HEV', 'PHEV', 'BEV']].sum()  # เปลี่ยนเป็น list
-
-    fig, ax = plt.subplots(figsize=(6, 4))
-    trend_data.plot(kind='line', marker='o', ax=ax)
-
-    ax.set_title('แนวโน้มการจดทะเบียนรถตั้งแต่ปี 2561-2567')
-    ax.set_xlabel('ปี')
-    ax.set_ylabel('จำนวนการจดทะเบียน')
-    ax.grid(True)
     plt.tight_layout()
     st.pyplot(fig)
 
@@ -88,25 +65,35 @@ with col1:
     plot_bar_chart()  # กราฟที่ 1
 
 with col2:
-    plot_trend_chart()  # กราฟที่ 2
+    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
 
 with col3:
-    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
+    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 4
+
+# แสดงผลข้อมูล
+st.markdown(
+    """
+    <div style="background-color:#ffa600;padding:5px;">
+        <h1 style="color:#58508d;text-align:center;">จำนวนการจดทะเบียนรถแยกตามประเภทของพลังงาน</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # แถวที่ 2
 col4, col5, col6, col7 = st.columns(4)
 
 with col4:
-    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
+    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')
 
 with col5:
-    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 4
+    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')
 
 with col6:
-    plot_engine_registration('PHEV', '#58508d', 'ยอดการจดทะเบียนรถประเภท PHEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 5
+    plot_engine_registration('PHEV', '#58508d', 'ยอดการจดทะเบียนรถประเภท PHEV ตั้งแต่ปี 2561-2567')
 
 with col7:
-    plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
+    plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')
 
 st.markdown(
     """
