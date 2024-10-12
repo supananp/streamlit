@@ -96,12 +96,17 @@ def plot_trend_chart():
 # ฟังก์ชันสำหรับย่อขนาดตัวเลข
 def format_number(value):
     if value >= 1_000_000:
-        formatted_value = f'{value / 1_000_000:.2f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยใช้ทศนิยม 2 ตำแหน่ง
+        formatted_value = f'{value / 1_000_000:.1f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยใช้ทศนิยม 1 ตำแหน่ง
     elif value >= 1_000:
-        formatted_value = f'{value / 1_000:.2f}K'  # เปลี่ยนเป็น "K" สำหรับพัน โดยใช้ทศนิยม 2 ตำแหน่ง
+        formatted_value = f'{value / 1_000:.0f}K'  # เปลี่ยนเป็น "K" สำหรับพัน โดยใช้ทศนิยม 0 ตำแหน่ง
     else:
         formatted_value = str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
+    return formatted_value
 
+# ตัวอย่างการใช้งาน
+print(format_number(5_609_084))  # จะได้ผลลัพธ์เป็น 5.6M
+print(format_number(340_496))     # จะได้ผลลัพธ์เป็น 340K
+print(format_number(37_139))      # จะได้ผลลัพธ์เป็น 37K
     
 
 
