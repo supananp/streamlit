@@ -1,23 +1,17 @@
-import pandas as pd
-import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
-
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
 # ฟังก์ชันสำหรับกราฟประเภทที่ 3 ถึง 6
 def plot_engine_registration(engine_type, color, title):
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # กำหนดฟอนต์ที่นี่
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     counts = data_filtered.groupby('Year')[engine_type].sum()
 
     fig, ax = plt.subplots(figsize=(4, 3))  # ปรับขนาดให้เล็กลง
     counts.plot(kind='bar', color=color, edgecolor='black', ax=ax)
 
-    ax.set_title(title, fontsize=14)  # ตั้งขนาดฟอนต์ของหัวตาราง
-    ax.set_xlabel('ปี', fontsize=12)
-    ax.set_ylabel('จำนวนการจดทะเบียน', fontsize=12)
+    ax.set_title(title)
+    ax.set_xlabel('ปี')
+    ax.set_ylabel('จำนวนการจดทะเบียน')
     ax.tick_params(axis='x', rotation=0)  # หมุน labels บนแกน X
     ax.grid(False)  # ปิดการแสดงเส้นกริด
     plt.tight_layout()
@@ -25,7 +19,7 @@ def plot_engine_registration(engine_type, color, title):
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # กำหนดฟอนต์ที่นี่
+    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
@@ -45,11 +39,11 @@ def plot_bar_chart():
         ax.bar(r1 + 3 * bar_width, df_year['BEV'], color='#003f5c', width=bar_width, label='BEV', alpha=0.8)
 
         ax.set_xticks([r + bar_width * 1.5 for r in range(n_car_types)])
-        ax.set_xticklabels(car_types, rotation=45, ha='right', fontsize=12)  # ตั้งขนาดฟอนต์ของ labels
-        ax.set_title(f'Year {year}', fontsize=14)  # ตั้งขนาดฟอนต์ของหัวตาราง
+        ax.set_xticklabels(car_types, rotation=45, ha='right')
+        ax.set_title(f'Year {year}')
 
         if i == 0:
-            ax.set_ylabel('จำนวนการจดทะเบียน', fontsize=12)
+            ax.set_ylabel('จำนวนการจดทะเบียน')
 
     axes[0].legend()
     plt.tight_layout()
@@ -57,7 +51,7 @@ def plot_bar_chart():
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # กำหนดฟอนต์ที่นี่
+    plt.rcParams['font.family'] = 'Angsana New'  # เปลี่ยนฟอนต์เป็น Angsana New
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -93,7 +87,6 @@ def format_number(value):
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
 def plot_gauge_chart(value, total_sum, label, color):
-    plt.rcParams['font.family'] = 'Noto Sans Thai'  # กำหนดฟอนต์ที่นี่
     fig, ax = plt.subplots(figsize=(3, 2), subplot_kw={'projection': 'polar'})  # ปรับขนาดให้เล็กลง
 
     # คำนวณมุมสำหรับกราฟ (0 ถึง 360 องศา)
@@ -151,22 +144,21 @@ with col3:
     plot_trend_chart()  # กราฟที่ 2
 
 # แถว 2
-col4, col5 = st.columns(2)
+col4, col5, col6, col7 = st.columns(4)
 
 with col4:
-    plot_engine_registration('ICEV', '#ff6361', 'จำนวน ICEV')  # กราฟที่ 3
+    plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
 
 with col5:
-    plot_engine_registration('HEV', '#ffa600', 'จำนวน HEV')  # กราฟที่ 4
-
-# แถว 3
-col6, col7 = st.columns(2)
+    plot_engine_registration('HEV', '#ffa600', 'ยอดการจดทะเบียนรถประเภท HEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 4
 
 with col6:
-    plot_engine_registration('PHEV', '#58508d', 'จำนวน PHEV')  # กราฟที่ 5
+    plot_engine_registration('PHEV', '#58508d', 'ยอดการจดทะเบียนรถประเภท PHEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 5
 
 with col7:
-    plot_engine_registration('BEV', '#003f5c', 'จำนวน BEV')  # กราฟที่ 6
+    plot_engine_registration('BEV', '#003f5c', 'ยอดการจดทะเบียนรถประเภท BEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 6
+
+
 
 
 st.markdown(
@@ -176,4 +168,4 @@ st.markdown(
     </div>
     """,
     unsafe_allow_html=True
-) 
+)
