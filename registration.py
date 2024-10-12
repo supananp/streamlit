@@ -1,13 +1,11 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import numpy as np
-from matplotlib import font_manager
 
-# โหลดฟอนต์ Angsana New
-font_path = 'assets/fonts/AngsanaNew.ttf'
-font_prop = font_manager.FontProperties(fname=font_path)
-
+# ใช้ฟอนต์ Tahoma แทน Angsana New
+plt.rcParams['font.family'] = 'Tahoma'
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
