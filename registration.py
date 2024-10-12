@@ -105,9 +105,6 @@ def format_number(value):
     # สร้างข้อความ HTML เพื่อปรับขนาดตัวอักษร
     return f'<span style="font-size: 12px;">{formatted_value}</span>'  # ปรับขนาดตามต้องการ
 
-# แสดงผล
-formatted_number = format_number(360000)
-st.markdown(formatted_number, unsafe_allow_html=True)
 
 
 
