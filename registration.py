@@ -1,11 +1,8 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 import numpy as np
 
-# ใช้ฟอนต์ Tahoma แทน Angsana New
-plt.rcParams['font.family'] = 'Tahoma'
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
@@ -17,24 +14,25 @@ def plot_engine_registration(engine_type, color, title):
     fig, ax = plt.subplots(figsize=(4, 3))  # ปรับขนาดให้เล็กลง
     counts.plot(kind='bar', color=color, edgecolor='black', ax=ax)
 
-    ax.set_title(title, fontproperties=font_prop)  # ใช้ฟอนต์ Angsana New
-    ax.set_xlabel('ปี', fontproperties=font_prop)
-    ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
-    ax.tick_params(axis='x', rotation=0)
-    ax.grid(False)
+    ax.set_title(title)
+    ax.set_xlabel('ปี')
+    ax.set_ylabel('จำนวนการจดทะเบียน')
+    ax.tick_params(axis='x', rotation=0)  # หมุน labels บนแกน X
+    ax.grid(False)  # ปิดการแสดงเส้นกริด
     plt.tight_layout()
     st.pyplot(fig)
 
 # กราฟที่ 1 (Bar Chart)
 def plot_bar_chart():
-    plt.rcParams['font.family'] = font_prop.get_name()  # ใช้ฟอนต์ Angsana New
+    # ตั้งค่าฟอนต์ Tahoma เพื่อรองรับภาษาไทย
+    plt.rcParams['font.family'] = 'Tahoma'
     years = df['Year'].unique()
     car_types = df['Type'].unique()
 
     bar_width = 0.2
     n_car_types = len(car_types)
 
-    fig, axes = plt.subplots(1, len(years), figsize=(15, 6), sharey=True)
+    fig, axes = plt.subplots(1, len(years), figsize=(15, 6), sharey=True)  # ขยายความกว้าง
 
     for i, year in enumerate(years):
         ax = axes[i]
@@ -47,11 +45,11 @@ def plot_bar_chart():
         ax.bar(r1 + 3 * bar_width, df_year['BEV'], color='#003f5c', width=bar_width, label='BEV', alpha=0.8)
 
         ax.set_xticks([r + bar_width * 1.5 for r in range(n_car_types)])
-        ax.set_xticklabels(car_types, rotation=45, ha='right', fontproperties=font_prop)
-        ax.set_title(f'Year {year}', fontproperties=font_prop)
+        ax.set_xticklabels(car_types, rotation=45, ha='right')
+        ax.set_title(f'Year {year}')
 
         if i == 0:
-            ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
+            ax.set_ylabel('จำนวนการจดทะเบียน')
 
     axes[0].legend()
     plt.tight_layout()
@@ -59,7 +57,7 @@ def plot_bar_chart():
 
 # กราฟที่ 2 (Trend Chart)
 def plot_trend_chart():
-    plt.rcParams['font.family'] = font_prop.get_name()  # ใช้ฟอนต์ Angsana New
+    plt.rcParams['font.family'] = 'Tahoma'
     data_years = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
     engine_types = ['ICEV', 'HEV', 'PHEV', 'BEV']
     colors = {'ICEV': '#ff6361', 'HEV': '#ffa600', 'PHEV': '#58508d', 'BEV': '#003f5c'}
@@ -77,14 +75,14 @@ def plot_trend_chart():
     for engine_type in engine_types:
         ax.plot(years, plot_data[engine_type], marker='o', label=engine_type, color=colors[engine_type])
 
-    ax.set_xlabel('ปี', fontsize=14, labelpad=15, fontproperties=font_prop)
-    ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15, fontproperties=font_prop)
-    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=16, pad=20, fontproperties=font_prop)
+    ax.set_xlabel('ปี', fontsize=14, labelpad=15)
+    ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15)
+    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=16, pad=20)
     ax.legend(fontsize=12)
     plt.tight_layout()
     st.pyplot(fig)
 
-# การเรียกฟังก์ชันต่าง ๆ เพื่อแสดงผลบน Streamlit
+# เรียกใช้ฟังก์ชันกราฟ
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -92,6 +90,7 @@ with col1:
 
 with col2:
     plot_trend_chart()  # กราฟที่ 2
+
 
 with col3:
     plot_engine_registration('ICEV', '#ff6361', 'ยอดการจดทะเบียนรถประเภท ICEV ตั้งแต่ปี 2561-2567')  # กราฟที่ 3
