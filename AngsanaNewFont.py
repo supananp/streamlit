@@ -1,3 +1,2 @@
-font_path = 'fonts/AngsanaNew.ttf'  
-fm.fontManager.addfont(font_path)
-plt.rcParams['font.family'] = 'Angsana New'
+import os
+font_path = os.path.join(os.getcwd(), 'angsana.ttc')
