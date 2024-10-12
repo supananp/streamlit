@@ -96,11 +96,19 @@ def plot_trend_chart():
 # ฟังก์ชันสำหรับย่อขนาดตัวเลข
 def format_number(value):
     if value >= 1_000_000:
-        return f'{value / 1_000_000:.2f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยใช้ทศนิยม 1 ตำแหน่ง
+        formatted_value = f'{value / 1_000_000:.2f}M'  # เปลี่ยนเป็น "M" สำหรับล้าน โดยใช้ทศนิยม 2 ตำแหน่ง
     elif value >= 1_000:
-        return f'{value / 1_000:.2f}K'  # เปลี่ยนเป็น "K" สำหรับพัน โดยใช้ทศนิยม 1 ตำแหน่ง
+        formatted_value = f'{value / 1_000:.2f}K'  # เปลี่ยนเป็น "K" สำหรับพัน โดยใช้ทศนิยม 2 ตำแหน่ง
     else:
-        return str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
+        formatted_value = str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
+
+    # สร้างข้อความ HTML เพื่อปรับขนาดตัวอักษร
+    return f'<span style="font-size: 12px;">{formatted_value}</span>'  # ปรับขนาดตามต้องการ
+
+# แสดงผล
+formatted_number = format_number(360000)
+st.markdown(formatted_number, unsafe_allow_html=True)
+
 
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
