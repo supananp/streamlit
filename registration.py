@@ -11,6 +11,13 @@ font_prop = font_manager.FontProperties(fname=font_path)
 # อ่านไฟล์ Excel
 df = pd.read_excel('ยอดจดทะเบียนรถรวม.xlsx', engine='openpyxl')
 
+# กำหนดขนาดฟอนต์
+font_size_title = 25
+font_size_label = 25
+font_size_legend = 25
+font_size_metric = 25
+font_size_gauge = 25
+
 # ฟังก์ชันสำหรับกราฟประเภทที่ 4 ถึง 7
 def plot_engine_registration(engine_type, color, title):
     data_filtered = df[(df['Year'] >= 2561) & (df['Year'] <= 2567)]
@@ -19,7 +26,7 @@ def plot_engine_registration(engine_type, color, title):
     fig, ax = plt.subplots(figsize=(4, 3))  # ปรับขนาดให้เล็กลง
     counts.plot(kind='bar', color=color, edgecolor='black', ax=ax)
 
-    ax.set_title(title, fontproperties=font_prop, fontsize=30)  # เพิ่มขนาดฟอนต์ชื่อกราฟ
+    ax.set_title(title, fontproperties=font_prop)
     ax.set_xlabel('ปี', fontproperties=font_prop)
     ax.set_ylabel('จำนวนการจดทะเบียน', fontproperties=font_prop)
     ax.tick_params(axis='x', rotation=0)  # หมุน labels บนแกน X
@@ -81,8 +88,7 @@ def plot_trend_chart():
 
     ax.set_xlabel('ปี', fontsize=14, labelpad=15, fontproperties=font_prop)
     ax.set_ylabel('จำนวนที่จดทะเบียน', fontsize=14, labelpad=15, fontproperties=font_prop)
-    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', 
-                 fontsize=40, pad=25, fontproperties=font_prop)  # เพิ่มขนาดฟอนต์
+    ax.set_title('แนวโน้มยอดจดทะเบียนรถแยกตามประเภทพลังงานในปี 2561 - 2567', fontsize=30, pad=25, fontproperties=font_prop)
     ax.legend(prop=font_prop)  # ใช้ฟอนต์ Angsana New ใน legend
     plt.tight_layout()
     st.pyplot(fig)
@@ -96,6 +102,10 @@ def format_number(value):
     else:
         formatted_value = str(value)  # แสดงตามปกติถ้าน้อยกว่า 1,000
     return formatted_value
+
+
+    
+
 
 
 # ฟังก์ชันสำหรับสร้าง gauge chart พร้อมแสดงยอดรวมและเปอร์เซ็นต์ที่เหมาะสม
@@ -139,26 +149,10 @@ def plot_all_gauge_charts():
     cols = st.columns(len(total_registrations))
     for col, (engine_type, value) in zip(cols, total_registrations.items()):
         with col:
-            # ลดขนาดตัวหนังสือของยอดรวมใน Metric
+            # แสดงยอดรวมการจดทะเบียนรถแต่ละประเภทพร้อมย่อขนาดตัวเลข
             formatted_value = format_number(value)
-            st.markdown(f"<h5 style='font-size:12px;'>ยอดรวม {engine_type}</h5>", unsafe_allow_html=True)  # ลดขนาด
-            st.metric(label="", value=formatted_value)
-
-            plot_gauge_chart(value, total_sum, engine_type, colors[engine_type])
-
-# เรียกใช้งานฟังก์ชันทั้งหมดในหน้าเว็บ Streamlit
-st.title("ยอดจดทะเบียนรถยนต์ตามประเภทพลังงาน")
-
-# เรียกใช้งานฟังก์ชันต่างๆ
-plot_all_gauge_charts()
-plot_trend_chart()
-
-# กราฟประเภทที่ 4 ถึง 7
-plot_engine_registration('ICEV', '#ff6361', 'ยอดจดทะเบียนรถ ICEV')
-plot_engine_registration('HEV', '#ffa600', 'ยอดจดทะเบียนรถ HEV')
-plot_engine_registration('PHEV', '#58508d', 'ยอดจดทะเบียนรถ PHEV')
-plot_engine_registration('BEV', '#003f5c', 'ยอดจดทะเบียนรถ BEV')
-
+            st.metric(label=f"ยอดรวม {engine_type}", value=formatted_value)
+            plot_gauge_chart(value, total_sum, engine_type, colors[engine_type])  # ใช้ยอดรวมในการคำนวณเปอร์เซ็นต์
 
 # แถว 1
 col1, col2, col3 = st.columns(3)
